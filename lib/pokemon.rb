@@ -23,8 +23,9 @@ class Pokemon
      FROM pokemon
      WHERE id = ?
    SQL
-     found=db.execute(sql,id).flatten
-     self.new(id:found[0],name:found[1],type:found[2],db:db)
+     found=db.execute(sql,id).map do |i|
+     self.new(id:i[0],name:i[1],type:i[2],db:db)
+   end.first
   end
 
 end
