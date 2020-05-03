@@ -3,8 +3,8 @@ class Pokemon
 
   attr_accessor :name,:type,:id ,:db
 
-  def initialize(attribute)
-    @id,@name,@type,@db = attribute[:id],attribute[:name],attribute[:type],attribute[:db];
+  def initialize(id:,name:,type:,db:)
+    @id,@name,@type,@db = id,name,type,db;
   end
 
   def self.save(name,type,db)
@@ -22,8 +22,9 @@ class Pokemon
      SELECT *
      FROM pokemon
      WHERE id = ?
+     LIMIT 1
    SQL
-     found=db.execute(sql,id).map do |i|
+   db.execute(sql,id).map do |i|
      self.new(id:i[0],name:i[1],type:i[2],db:db)
    end.first
   end
